@@ -34,26 +34,24 @@ public class UserController
 	
 	@RequestMapping(value="/findUserByEmail", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
 	@ResponseBody
-	private ResponseEntity<Optional<User>> findUser(@RequestParam String email)
+	private ResponseEntity<User> findUser( String email)
 	{	
-		return new ResponseEntity<>(this.ur.findById(email), HttpStatus.OK);
+		Optional<User> user = this.ur.findById(email);
+		if(user.isPresent()) {
+			return new ResponseEntity<>(user.get(), HttpStatus.OK);
+		}
+		return new ResponseEntity<>( HttpStatus.OK);
+
 	}
 	
 	@RequestMapping(value="/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	private ResponseEntity<Optional<User>> login(@RequestBody User user)
 	{
-		Optional<User> user2 = this.ur.findById(user.getEmail());
+		Optional<User> user2 = this.ur.login(user.getEmail(), user.getPassword());
 		if(user2.isPresent())
 		{
-			if(user2.get().getPassword().equals(user.getPassword()))
-			{
-				return new ResponseEntity<>(user2, HttpStatus.OK);
-			}
-			else
-			{
-				return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-			}
+			return new ResponseEntity<>(user2, HttpStatus.OK);
 		}
 		else
 		{

@@ -33,6 +33,14 @@ public class AdventureController
 	AdventureRepository ar;
 	@Autowired
 	UserRepository ur;
+	
+	@RequestMapping(value="/getAllAdventures", produces= MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+	@ResponseBody
+	@Autowired
+	public ResponseEntity<List<Adventure>> getAllAdventures(){
+		List<Adventure> allAdventures = this.ar.findAll();
+		return new ResponseEntity<List<Adventure>>(allAdventures, HttpStatus.OK);
+	}
 
 	@RequestMapping(value="/findAdventures", method= RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
@@ -84,9 +92,9 @@ public class AdventureController
 
 	}
 
-	@RequestMapping(value="/findAdventureById", produces= MediaType.APPLICATION_JSON_VALUE, method= RequestMethod.GET)
+	@RequestMapping(value="/findAdventure", produces= MediaType.APPLICATION_JSON_VALUE, method= RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<Optional<Adventure>> findAdventure(@RequestParam int id)
+	public ResponseEntity<Optional<Adventure>> findAdventure(int id)
 	{
 		System.out.println(id);
 		return new ResponseEntity<>(this.ar.findById(id), HttpStatus.OK);
