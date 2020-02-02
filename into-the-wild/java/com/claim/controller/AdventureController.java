@@ -42,9 +42,9 @@ public class AdventureController
 		return new ResponseEntity<List<Adventure>>(allAdventures, HttpStatus.OK);
 	}
 
-	@RequestMapping(value="/findAdventures", method= RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/findMyAdventures", method= RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ResponseEntity<List<Adventure>> findAdventures(@RequestParam String email)
+	public ResponseEntity<List<Adventure>> findMyAdventures(@RequestParam String email)
 	{
 		List<Adventure> adventures = this.ar.findPartyLeaderAdventures(email);
 		return new ResponseEntity<>(adventures, HttpStatus.OK);
@@ -94,10 +94,17 @@ public class AdventureController
 
 	@RequestMapping(value="/findAdventure", produces= MediaType.APPLICATION_JSON_VALUE, method= RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<Optional<Adventure>> findAdventure(int id)
+	public ResponseEntity<Adventure> findAdventure(@RequestParam String adventureId)
 	{
-		System.out.println(id);
-		return new ResponseEntity<>(this.ar.findById(id), HttpStatus.OK);
+		String[] splitId = adventureId.split("\"");
+		String splitNum = splitId[3];
+		int id = Integer.parseInt(splitNum);
+		Optional<Adventure> adventure = this.ar.findById(id);
+		if(adventure.isPresent())
+		{
+			return new ResponseEntity<>(adventure.get(), HttpStatus.OK);
+		}
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 }
