@@ -1,10 +1,12 @@
 package com.claim.entity;
 
-import java.util.Set;
+import java.util.Arrays;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 
 @Entity
@@ -20,6 +22,19 @@ public class User
 	private String email;
 	@Column(name="password")
 	private String password;
+	@Lob
+	@Column(name="profile_pic")
+	private byte[] profilePic;
+	@Column(name="age")
+	private int age;
+	@Column(name="city")
+	private String city;
+	@Column(name="state")
+	private String state;
+	@Column(name="park_count")
+	private int parkCount;
+	@Column(name="birthday")
+	private Date birthday;
 	
 
 	
@@ -61,11 +76,61 @@ public class User
 		this.password = password;
 	}
 
+	public byte[] getProfilePic() {
+		return profilePic;
+	}
+
+	public void setProfilePic(byte[] profilePic) {
+		this.profilePic = profilePic;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public int getParkCount() {
+		return parkCount;
+	}
+
+	public void setParkCount(int parkCount) {
+		this.parkCount = parkCount;
+	}
+
+	public Date getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
+	}
+
 	@Override
 	public String toString() {
 		return "User [firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", password=" + password
-				+ "]";
+				+ ", profilePic=" + Arrays.toString(profilePic) + ", age=" + age + ", city=" + city + ", state=" + state
+				+ ", parkCount=" + parkCount + ", birthday=" + birthday + "]";
 	}
+
 	
 }
 

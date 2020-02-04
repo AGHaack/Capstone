@@ -1,5 +1,6 @@
 package com.claim.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.multipart.MultipartFile;
 
 import com.claim.entity.User;
 import com.claim.repository.UserRepository;
@@ -25,6 +26,26 @@ public class UserController
 {
 	@Autowired
 	UserRepository ur;
+	
+	@RequestMapping(value= "/updateUser", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public void updateUserAge(@RequestBody User user) {
+		System.out.println(user);
+		
+	}
+	
+	@RequestMapping(value="/saveProfilePicture", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public void saveProfilePic(@RequestParam("image") MultipartFile file, @RequestParam("email") String email) {
+		byte[] img = null;
+		try {
+			img = file.getBytes();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		User user = ur.findUser(email);
+		user.setProfilePic(img);
+		this.ur.save(user);
+	}
 	
 	@RequestMapping(value="/createNewUser", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public void createNewUser(@RequestBody User user)

@@ -11,6 +11,6 @@ import com.claim.entity.UserNotification;
 @Repository
 public interface UserNotificationRepository extends JpaRepository<UserNotification, Integer>
 {
-	@Query(value="Select * from UserNotification where to_email = :email", nativeQuery= true)
+	@Query(value="Select * from notifications where to_email = :email", nativeQuery= true)
 	List<UserNotification> findMyNotifications(String email);
 }
