@@ -1,6 +1,7 @@
 package com.claim.controller;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,7 +30,13 @@ public class UserController
 	
 	@RequestMapping(value= "/updateUser", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public void updateUserAge(@RequestBody User user) {
-		System.out.println(user);
+		Date bDay = user.getBirthday();
+		if(bDay != null) {
+			int age = user.calculateAge(bDay);
+			user.setAge(age);
+		}
+		
+		this.ur.save(user);
 		
 	}
 	

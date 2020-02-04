@@ -1,5 +1,9 @@
 package com.claim.entity;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -35,7 +39,6 @@ public class User
 	private int parkCount;
 	@Column(name="birthday")
 	private Date birthday;
-	
 
 	
 	
@@ -122,6 +125,16 @@ public class User
 
 	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
+	}
+	
+	public int calculateAge(Date bday) {
+		LocalDate today = LocalDate.now();
+		ZoneId zId = ZoneId.systemDefault();
+		Instant instant = bday.toInstant();
+		LocalDate bdayLocal = instant.atZone(zId).toLocalDate();
+		int age = Period.between(bdayLocal, today).getYears();
+		
+		return age;
 	}
 
 	@Override
