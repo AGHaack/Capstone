@@ -49,7 +49,7 @@ public class UserController
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		User user = ur.findUser(email);
+		User user = ur.findByEmail(email);
 		user.setProfilePic(img);
 		this.ur.save(user);
 	}
@@ -64,9 +64,9 @@ public class UserController
 	@ResponseBody
 	private ResponseEntity<User> findUser( String email)
 	{	
-		Optional<User> user = this.ur.findById(email);
-		if(user.isPresent()) {
-			return new ResponseEntity<>(user.get(), HttpStatus.OK);
+		User user = this.ur.findByEmail(email);
+		if(user != null) {
+			return new ResponseEntity<>(user, HttpStatus.OK);
 		}
 		return new ResponseEntity<>( HttpStatus.OK);
 

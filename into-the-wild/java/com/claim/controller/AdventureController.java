@@ -4,6 +4,7 @@ package com.claim.controller;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -39,6 +40,7 @@ public class AdventureController
 	@Autowired
 	public ResponseEntity<List<Adventure>> getAllAdventures(){
 		List<Adventure> allAdventures = this.ar.findAll();
+		Collections.reverse(allAdventures);
 		return new ResponseEntity<List<Adventure>>(allAdventures, HttpStatus.OK);
 	}
 

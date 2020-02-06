@@ -1,6 +1,7 @@
 package com.claim.entity;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,9 +21,15 @@ public class UserParks {
 	@JoinColumn(name="user_key", referencedColumnName="email")
 	private User userKey;
 	@Column(name="park")
-	private String park;
+	private String parkName;
+	@Column(name="park_code")
+	private String parkCode;
 	@Column(name="visited")
-	private Date visited;
+	private int visited;
+	@Column(name="activity")
+	private String activity;
+	@Column(name="location")
+	private String location;
 	
 	public UserParks() {
 		
@@ -44,25 +51,69 @@ public class UserParks {
 		this.userKey = userKey;
 	}
 
-	public String getPark() {
-		return park;
-	}
-
-	public void setPark(String park) {
-		this.park = park;
-	}
-
-	public Date getVisited() {
+	public int getVisited() {
 		return visited;
 	}
 
-	public void setVisited(Date visited) {
+	public void setVisited(int visited) {
 		this.visited = visited;
+	}
+	
+	public String getParkName() {
+		return parkName;
+	}
+
+	public void setParkName(String parkName) {
+		this.parkName = parkName;
+	}
+
+	public String getParkCode() {
+		return parkCode;
+	}
+
+	public void setParkCode(String parkCode) {
+		this.parkCode = parkCode;
+	}
+
+	public String getActivity() {
+		return activity;
+	}
+
+	public void setActivity(String activity) {
+		this.activity = activity;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public boolean checkVisited(List<UserParks> parks, String newPark) {
+		boolean hasVisited = false;
+		for(UserParks p : parks) {
+			String oldPark = p.getParkName();
+			if(!oldPark.equals(newPark)) {
+				hasVisited = false;
+			}
+			else {
+				hasVisited = true;
+				break;
+			}
+		}
+		return hasVisited;
 	}
 
 	@Override
 	public String toString() {
-		return "UserParks [id=" + id + ", userKey=" + userKey + ", park=" + park + "]";
+		return "UserParks [id=" + id + ", userKey=" + userKey + ", parkName=" + parkName + ", parkCode=" + parkCode
+				+ ", visited=" + visited + "]";
 	}
+
+	
+
+
 	
 }

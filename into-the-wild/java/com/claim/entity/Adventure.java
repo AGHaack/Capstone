@@ -1,12 +1,12 @@
 package com.claim.entity;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
@@ -15,7 +15,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="adventure")
-public class Adventure 
+public class Adventure implements Comparable<Adventure>
 {
 	@Id
 	@Column(name="id")
@@ -173,8 +173,21 @@ public class Adventure
 	public void setPostDate(Date postDate) {
 		this.postDate = postDate;
 	}
+	
+
+	@Override
+	public String toString() {
+		return "Adventure [id=" + id + ", partyLeader=" + partyLeader + ", name=" + name + ", park=" + park
+				+ ", activity=" + activity + ", where=" + where + ", startDate=" + startDate + ", endDate=" + endDate
+				+ ", post=" + post + ", pic=" + Arrays.toString(pic) + ", postDate=" + postDate + "]";
+	}
 
 
+	@Override
+	public int compareTo(Adventure o) {
+		
+		return this.getPostDate().compareTo(o.getPostDate());
+	}
 
 
 }
