@@ -11,5 +11,8 @@ import com.claim.entity.Message;
 public interface MessageRepository extends JpaRepository<Message, Integer> {
 	
 	@Query(value="select * from message where to_email = :email", nativeQuery= true)
-	List<Message> findMyMessages(String email);
+	List<Message> findMyIncomingMessages(String email);
+	
+	@Query(value="select * from message where from_email = :email", nativeQuery= true)
+	List<Message> findMyOutGoingMessages(String email);
 }

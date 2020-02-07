@@ -29,18 +29,18 @@ public class MessageController {
 	@Autowired
 	UserRepository ur;
 	
-	@RequestMapping(value="/getMyMessages", method= RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/getMyIncomingMessages", method= RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ResponseEntity<List<Message>> getMyMessages(@RequestParam String email){
-		List<Message> myMessages = this.mr.findMyMessages(email);
+	public ResponseEntity<List<Message>> getMyIncomingMessages(@RequestParam String email){
+		List<Message> myMessages = this.mr.findMyIncomingMessages(email);
 
 		return new ResponseEntity<>(myMessages, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/sendMessage", method= RequestMethod.POST, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
 	public void sendMessage(@RequestParam("to") String toEmail, @RequestParam("from") String fromEmail, @RequestParam("message") String message) {
-		User toUser = this.ur.findUser(toEmail);
-		User fromUser = this.ur.findUser(fromEmail);
+		User toUser = this.ur.findByEmail(toEmail);
+		User fromUser = this.ur.findByEmail(fromEmail);
 		Message m = new Message();
 		LocalDate today = LocalDate.now();
 		m.setTo(toUser);
@@ -50,5 +50,12 @@ public class MessageController {
 		m.setMessage(message);
 		
 		this.mr.save(m);
+	}
+	@RequestMapping(value="/getMySentMessages", method= RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ResponseEntity<List<Message>> getMySentMessages(@RequestParam String email){
+		List<Message> messages = this.mr.findMyOutGoingMessages(email);
+		
+		return new ResponseEntity<>(messages, HttpStatus.OK);
 	}
 }

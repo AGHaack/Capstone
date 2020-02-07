@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.claim.entity.User;
 import com.claim.repository.UserRepository;
+import com.claim.service.MailSender;
 
 @CrossOrigin
 @RestController
@@ -27,6 +28,9 @@ public class UserController
 {
 	@Autowired
 	UserRepository ur;
+	@Autowired
+	MailSender ms;
+	
 	
 	@RequestMapping(value= "/updateUser", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public void updateUserAge(@RequestBody User user) {
@@ -57,6 +61,9 @@ public class UserController
 	@RequestMapping(value="/createNewUser", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public void createNewUser(@RequestBody User user)
 	{
+		
+		String message = "Thank you for registering an account for Into The Wild"+ user.getFirstName() +"!  We hope you can enjoy all that our National Parks have to offer!";
+		ms.sendEmail(user.getEmail(), "Thank you!", message);
 		this.ur.save(user);
 	}
 	

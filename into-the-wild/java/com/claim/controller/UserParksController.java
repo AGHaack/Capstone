@@ -36,7 +36,7 @@ public class UserParksController {
 	
 	@RequestMapping(value="/addNewPark", method= RequestMethod.POST, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
 	public void addNewPark(@RequestParam("email") String email, @RequestParam("parkName") String park, @RequestParam("year") String visited, @RequestParam("parkCode") String parkCode, @RequestParam("activity") String activity, @RequestParam("where") String where) {
-		User user = this.ur.findUser(email);
+		User user = this.ur.findByEmail(email);
 		List<UserParks> upVisited = this.upr.findUserParks(email);
 		UserParks up = new UserParks();
 		boolean hasVisited = up.checkVisited(upVisited, park);

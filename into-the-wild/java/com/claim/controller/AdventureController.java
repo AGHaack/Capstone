@@ -64,7 +64,7 @@ public class AdventureController
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		User partyLeader = ur.findUser(email);
+		User partyLeader = ur.findByEmail(email);
 		Adventure adventure = new Adventure();
 		adventure.setPartyLeader(partyLeader);
 		adventure.setName(name);
