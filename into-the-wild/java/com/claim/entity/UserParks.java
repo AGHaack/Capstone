@@ -109,8 +109,10 @@ public class UserParks {
 	@Override
 	public String toString() {
 		return "UserParks [id=" + id + ", userKey=" + userKey + ", parkName=" + parkName + ", parkCode=" + parkCode
-				+ ", visited=" + visited + "]";
+				+ ", visited=" + visited + ", activity=" + activity + ", location=" + location + "]";
 	}
+
+
 
 	
 

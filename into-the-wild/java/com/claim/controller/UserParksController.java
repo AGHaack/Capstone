@@ -29,8 +29,8 @@ public class UserParksController {
 	
 	@RequestMapping(value="/getUserParks", method= RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<UserParks>> getUserParks(@RequestParam String email){
-		List<UserParks> parks = this.upr.findUserParks(email);
 		
+		List<UserParks> parks = this.upr.findUserParks(email);
 		return new ResponseEntity<>(parks, HttpStatus.OK);
 	}
 	

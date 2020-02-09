@@ -1,6 +1,7 @@
 package com.claim.entity;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,12 +13,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="message")
-public class Message {
+public class Message implements Comparable<Message> {
 	@Id
 	@Column(name="id")
 	private int id;
 	@Column(name="sent_date")
-	private LocalDate sent;
+	private Date sent;
 	@OneToOne(fetch= FetchType.LAZY)
 	@JoinColumn(name="to_email", referencedColumnName="email")
 	private User to;
@@ -28,6 +29,7 @@ public class Message {
 	private boolean seen;
 	@Column(name="message")
 	private String message;
+	
 	
 	public Message() {
 		
@@ -41,11 +43,11 @@ public class Message {
 		this.id = id;
 	}
 
-	public LocalDate getSent() {
+	public Date getSent() {
 		return sent;
 	}
 
-	public void setSent(LocalDate sent) {
+	public void setSent(Date sent) {
 		this.sent = sent;
 	}
 
@@ -85,6 +87,12 @@ public class Message {
 	public String toString() {
 		return "Message [id=" + id + ", sent=" + sent + ", to=" + to + ", from=" + from + ", seen=" + seen
 				+ ", message=" + message + "]";
+	}
+
+	@Override
+	public int compareTo(Message o) {
+		
+		return this.getSent().compareTo(o.getSent());
 	}
 	
 }

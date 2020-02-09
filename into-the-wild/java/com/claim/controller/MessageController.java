@@ -3,6 +3,7 @@ package com.claim.controller;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,7 +35,7 @@ public class MessageController {
 	@ResponseBody
 	public ResponseEntity<List<Message>> getMyIncomingMessages(@RequestParam String email){
 		List<Message> myMessages = this.mr.findMyIncomingMessages(email);
-
+		Collections.reverse(myMessages);
 		return new ResponseEntity<>(myMessages, HttpStatus.OK);
 	}
 	
@@ -42,7 +44,7 @@ public class MessageController {
 		User toUser = this.ur.findByEmail(toEmail);
 		User fromUser = this.ur.findByEmail(fromEmail);
 		Message m = new Message();
-		LocalDate today = LocalDate.now();
+		Date today = new Date();
 		m.setTo(toUser);
 		m.setFrom(fromUser);
 		m.setSent(today);
@@ -57,5 +59,13 @@ public class MessageController {
 		List<Message> messages = this.mr.findMyOutGoingMessages(email);
 		
 		return new ResponseEntity<>(messages, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/updateMessageSeen", method= RequestMethod.POST, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
+	public void updateMessageSeen(@RequestParam("id") String id) {
+		int messageId = Integer.parseInt(id);
+		Message m = this.mr.findMessage(messageId);
+		m.setSeen(true);
+		this.mr.save(m);
 	}
 }

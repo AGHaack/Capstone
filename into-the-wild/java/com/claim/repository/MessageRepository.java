@@ -15,4 +15,6 @@ public interface MessageRepository extends JpaRepository<Message, Integer> {
 	
 	@Query(value="select * from message where from_email = :email", nativeQuery= true)
 	List<Message> findMyOutGoingMessages(String email);
+	@Query(value="select * from message where id = :id", nativeQuery= true)
+	Message findMessage(int id);
 }
