@@ -13,4 +13,7 @@ public interface UserParksRepository extends JpaRepository<UserParks, Integer> {
 	@Query(value= "Select * from user_parks where user_key = :email", nativeQuery = true)
 	List<UserParks> findUserParks(String email);
 	
+	@Query(value="Select * from user_parks where park = :park", nativeQuery = true)
+	List<UserParks> findUsersWhoVisitedPark(String park);
+	
 }

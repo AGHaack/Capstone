@@ -1,6 +1,7 @@
 package com.claim.controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,13 @@ public class UserParksController {
 	UserParksRepository upr;
 	@Autowired
 	UserRepository ur;
+	
+	@RequestMapping(value="/getUsersWhoVisitedPark", method= RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<UserParks>> getUsersWhoVisitedPark(@RequestParam("park") String park){
+		List<UserParks> parkList = this.upr.findUsersWhoVisitedPark(park);
+		
+		return new ResponseEntity<>(parkList, HttpStatus.OK);
+	}
 	
 	@RequestMapping(value="/getUserParks", method= RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<UserParks>> getUserParks(@RequestParam String email){
@@ -62,11 +70,6 @@ public class UserParksController {
 			up.setLocation(where);
 			this.upr.save(up);
 		}
-		
-		
-		
-		
-		
 		
 	}
 }
