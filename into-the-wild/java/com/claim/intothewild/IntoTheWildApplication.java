@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication
 @ComponentScan(basePackages="com.claim")
 public class IntoTheWildApplication {
-
+	// enter email password
 	public static void main(String[] args) {
 		SpringApplication.run(IntoTheWildApplication.class, args);
 		

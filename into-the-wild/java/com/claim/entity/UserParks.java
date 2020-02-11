@@ -1,5 +1,6 @@
 package com.claim.entity;
 
+import java.util.Comparator;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -12,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="user_parks")
-public class UserParks {
+public class UserParks implements Comparator<UserParks>{
 	@Id
 	@Column(name="id")
 	private int id;
@@ -109,6 +110,11 @@ public class UserParks {
 	public String toString() {
 		return "UserParks [id=" + id + ", userKey=" + userKey + ", parkName=" + parkName + ", parkCode=" + parkCode
 				+ ", visited=" + visited + ", activity=" + activity + ", location=" + location + "]";
+	}
+
+	@Override
+	public int compare(UserParks o1, UserParks o2) {
+		return o1.getVisited() - o2.getVisited();
 	}
 
 

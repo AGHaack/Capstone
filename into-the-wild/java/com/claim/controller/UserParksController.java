@@ -31,7 +31,8 @@ public class UserParksController {
 	@RequestMapping(value="/getUsersWhoVisitedPark", method= RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<UserParks>> getUsersWhoVisitedPark(@RequestParam("park") String park){
 		List<UserParks> parkList = this.upr.findUsersWhoVisitedPark(park);
-		
+		Collections.sort(parkList, new UserParks());
+		Collections.reverse(parkList);
 		return new ResponseEntity<>(parkList, HttpStatus.OK);
 	}
 	
